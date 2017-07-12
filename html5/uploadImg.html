@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>html5实现图片缩放上传</title>
+	<style>
+		body{
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		.page-content{
+			width: 100%;
+		}
+		.logo{
+			margin-top: 40px;
+			text-align: center;
+		}
+		.logo img{
+			width: 80px;
+			height: 80px;
+			border-radius: 40px;
+		}
+		.upload{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="page-content">
+		<div class="logo">
+			<img src="photo.png" alt="">
+		</div>
+		<div class="upload">
+			<form>
+				<input type="file" accept="image/*">
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="uploadImage.js"></script>
+</body>
+</html>
