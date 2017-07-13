@@ -9,219 +9,85 @@
 	<script type="text/javascript" src="node_modules/jquery-weui/dist/lib/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="node_modules/jquery-weui/dist/js/jquery-weui.js"></script>
 	<script type="text/javascript" src="node_modules/jquery-weui/dist/js/city-picker.js"></script>
+	<style type="text/css">
+		.my-picker .picker-items-col {
+		  -webkit-box-flex: 1;
+		  -webkit-flex: 1;
+		      -ms-flex: 1;
+		          flex: 1;
+		  max-width: 7rem;
+		}
+	</style>
 </head>
 <body>
 	<input type="text" id="city-picker">
 	<script type="text/javascript">
-		var data = [
-			{
-				name:'互联网/软件/通信',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'会计/金融/保险/银行',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'制造业',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'咨询/法律/教育',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'贸易',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'房产/建筑',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'能源/原材料',
-				sub:[
-					{
-						name:'董事长'
-					},{
-						name:'副董事长'
-					},{
-						name:'创始人'
-					},{
-						name:'法人代表'
-					},{
-						name:'总经理'
-					},{
-						name:'副总经理'
-					},{
-						name:'合伙人'
-					}
-				]
-			},{
-				name:'政府/组织/其他',
-				sub:[
-					{
-						name:'机构主席'
-					},{
-						name:'机构副主席'
-					},{
-						name:'机构会长'
-					},{
-						name:'机构副会长'
-					},{
-						name:'其他'
-					}
-				]
+	(function(){
+		$.get('data.json',function(response){
+			var data = JSON.parse(response);
+			var parentsName = data.map(function(d) {
+		        return d.name;
+		    });
+			var initSubs = sub(data[0]);
+			var initSubsName = initSubs.map(function (c) {
+		        return c.name;
+		    });
+		    var currentParent = parentsName[0];
+	      	var currentSub = initSubsName[0];
+	      	$('#city-picker').picker({
+	      		cssClass: "my-picker",
+	      		cols:[
+	      			{
+	      				textAlign: 'center',
+	      				values:parentsName
+	      			},{
+	      				textAlign: 'center',
+	      				values:initSubsName
+	      			}
+	      		],
+	      		onChange:function(picker,values,displayValues){
+	      			var newParent = picker.cols[0].displayValue;
+	      			var newSub;
+	      			if(newParent !== currentParent) {
+	      				var newSubs = getSubs(data,newParent);
+	      				newSub = newSubs[0].name;
+	      				picker.cols[1].replaceValues(newSubs.map(function (c) {
+	      	              return c.name;
+	      	            }), newSubs.map(function (c) {
+	      	              return c.name;
+	      	            }));
+	      	            currentParent = newParent;
+	      	            currentSub = newSub;
+	      	            picker.updateValue();
+	      	            return false;
+	      			}
+	      		}
+	      	});
+		});
+		function format(data){
+			var result = [];
+			for(var i=0;i<data.length;i++) {
+				var d = data[i];
+				if(/^请选择/.test(d.name)) continue;
+				result.push(d);
 			}
-		]
-		var format = function(data) {
-		  var result = [];
-		  for(var i=0;i<data.length;i++) {
-		    var d = data[i];
-		    if(/^请选择|市辖区/.test(d.name)) continue;
-		    result.push(d);
-		  }
-		  if(result.length) return result;
-		  return [];
-		};
-		var sub = function(data) {
-		    if(!data.sub) return [{ name: '' }];  // 有可能某些县级市没有区
-		    return format(data.sub);
-		};
-		var getSubs = function(p) {
-		    for(var i=0;i< data.length;i++) {
+			if(result.length) return result;
+			return [];
+		}
+		function sub(data){
+			if (!data.sub) {
+				return [{name:''}];
+			}
+			return format(data.sub);
+		}
+		function getSubs(data,p){
+			for(var i=0;i< data.length;i++) {
 		      if(data[i].code === p || data[i].name === p) return sub(data[i]);
 		    }
 		    return [];
-		};
-		var parentsName = data.map(function(d) {
-	        return d.name;
-	    });
-		var initSubs = sub(data[0]);
-		var initSubsName = initSubs.map(function (c) {
-	        return c.name;
-	    });
-	    var currentParent = parentsName[0];
-      	var currentSub = initSubsName[0];
-		$('#city-picker').picker({
-			cols:[
-				{
-					textAlign: 'center',
-					values:parentsName
-				},{
-					textAlign: 'center',
-					values:initSubsName
-				}
-			],
-			onChange:function(picker,values,displayValues){
-				var newParent = picker.cols[0].displayValue;
-				var newSub;
-				if(newParent !== currentParent) {
-					var newSubs = getSubs(newParent);
-					newSub = newSubs[0].name;
-					picker.cols[1].replaceValues(newSubs.map(function (c) {
-		              return c.name;
-		            }), newSubs.map(function (c) {
-		              return c.name;
-		            }));
-		            currentParent = newParent;
-		            currentSub = newSub;
-		            picker.updateValue();
-		            return false;
-				}
+		}
 
-			}
-		});
+	})();
 	</script>
 </body>
 </html>
