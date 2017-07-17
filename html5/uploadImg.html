@@ -1,61 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>html5实现图片缩放上传</title>
-	<link rel="stylesheet" type="text/css" href="bower_components/cropper/dist/cropper.css">
-	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="bower_components/cropper/dist/cropper.js"></script>
-	<style>
-		body{
-			width: 100%;
-			margin: 0;
-			padding: 0;
-		}
-		.page-content{
-			width: 100%;
-		}
-		.logo{
-			margin-top: 40px;
-			text-align: center;
-		}
-		.logo img{
-			width: 80px;
-			height: 80px;
-			border-radius: 40px;
-		}
-		.upload{
-			display: none;
-		}
-		#showEdit{
-			display: none;
-		}
-		#showEdit .btn-wraps{
-			position: absolute;
-			bottom: 60px;
-		}
-	</style>
-</head>
-<body>
-	<div class="page-content" id="showResult">
-		<div class="logo">
-			<img src="photo.png" alt="">
-		</div>
-		<div class="upload">
-			<form>
-				<input type="file" accept="image/*" capture="camera">
-			</form>
-		</div>
-	</div>
-	<div id="showEdit">
-		<div class="btn-wraps">
-			<button class="cancel">取消</button>
-			<button class="confirm">确定</button>
-		</div>
-		<div id="report"></div>
-	</div>
 
-	<script type="text/javascript" src="uploadImage.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>html5 实现图片缩放上传</title>
+  <link rel="stylesheet" href="./style/base.css">
+  <link rel="stylesheet" href="./style/uploadImage.css">
+</head>
+
+<body>
+  <!-- 头像上传 -->
+  <div class="page-content" id="showResult">
+    <label class="j-logo logo" data-img="./image/photo.png">
+      <input class="j-logo-file logo-file" type="file" accept="image/*">
+    </label>
+  </div>
+  <div class="show-edit" id="showEdit">
+    <div class="btn-wraps">
+      <button class="j-cancel cancel">取消</button>
+      <button class="j-confirm confirm">确定</button>
+    </div>
+    <div id="report">
+      <img class="j-report-img report-img" src="#">
+    </div>
+  </div>
+  <link rel="stylesheet" href="./bower_components/cropper/dist/cropper.css">
+  <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="./bower_components/cropper/dist/cropper.js"></script>
+  <script src="./script/exif.js"></script>
+  <script src="./script/uploadImage.js"></script>
 </body>
+
 </html>
