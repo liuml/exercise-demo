@@ -20,6 +20,7 @@ Slider.prototype.renderDom = function () {
   var _this = this
 
   this.ulElement = document.createElement('ul')
+  this.ulElement.style.width = length * this.translateOffset + 'px'
   for (var i = 0; i < length; i++) {
     var liElement = document.createElement('li')
     var imgSrc = datalist[i]
@@ -37,6 +38,7 @@ Slider.prototype.renderDom = function () {
     liElement.appendChild(imgObj)
     this.ulElement.appendChild(liElement)
     this.ulElement.style.transform = 'translateX(calc(-100vw * '+ this.index +'))'
+    this.ulElement.style.webkitTransform = 'translateX(calc(-100vw * '+ this.index +'))'
   }
   wrap.appendChild(this.ulElement)
 }
@@ -64,6 +66,7 @@ Slider.prototype.regEvent = function () {
       return
     }
     ulElement.style.transform = 'translateX('+ translateX +'px)'
+    ulElement.style.webkitTransform = 'translateX('+ translateX +'px)'
   }
   var endHandler = function (event) {
     var endTime = new Date() * 1
@@ -116,4 +119,5 @@ Slider.prototype.go = function (n) {
   }
   this.index = cindex
   ulElement.style.transform = 'translateX(calc(-100vw * '+ this.index +'))'
+  ulElement.style.webkitTransform = 'translateX(calc(-100vw * '+ this.index +'))'
 }
