@@ -21,6 +21,7 @@ Slider.prototype.renderDom = function () {
 
   this.ulElement = document.createElement('ul')
   this.ulElement.style.width = length * this.translateOffset + 'px'
+  this.ulElement.style.height = window.innerHeight + 'px'
   for (var i = 0; i < length; i++) {
     var liElement = document.createElement('li')
     var imgSrc = datalist[i]
