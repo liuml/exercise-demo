@@ -20,6 +20,7 @@ ul, li{
 ul{
   overflow: hidden;
   transition: transform .2s ease-out;
+  -webkit-backface-visibility: hidden;
 }
 li{
   display: -webkit-flex;
@@ -33,7 +34,6 @@ li{
   align-items: center;
   float: left;
   overflow-y: auto;
-  -webkit-backface-visibility: hidden;
 }
 li.ai-start{
   align-items: flex-start;
