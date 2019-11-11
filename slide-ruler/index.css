@@ -15,8 +15,9 @@ body {
 }
 .slide-ruler {
   position: relative;
+  overflow: hidden;
 }
-.slide-ruler .value {
+.slide-ruler .mark {
   width: 3px;
   height: 28px;
   position: absolute;
@@ -27,9 +28,6 @@ body {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   background: #1890ff;
-}
-.ruler-container {
-  overflow: hidden;
 }
 .ruler-content {
   white-space: nowrap;

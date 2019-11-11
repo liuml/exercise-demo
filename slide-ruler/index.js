@@ -34,11 +34,7 @@
   }
   function handleOutBoundary() {
     if (translateX > 0 || translateX < maxTranslate) {
-      if (translateX > 0) {
-        translateX = 0
-      } else if (translateX < maxTranslate) {
-        translateX = maxTranslate
-      }
+      translateX = translateX > 0 ? 0: maxTranslate
       scrollTo(translateX, 600)
       return true
     }
