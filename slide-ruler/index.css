@@ -37,8 +37,6 @@ body {
   height: 58px;
   padding: 14px 50vw 0;
   font-size: 0;
-  transition: transform 0.3s ease-in-out;
-  -webkit-backface-visibility: hidden;
 }
 .scale-item {
   display: inline-block;
