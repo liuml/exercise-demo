@@ -78,7 +78,9 @@ class SlideRuler {
   }
   scrollTo(x, time = 0, easing = "cubic-bezier(0.1, 0.57, 0.1, 1)") {
     this.ruler.style.transitionTimingFunction = easing;
+    this.ruler.style.webkitTransitionTimingFunction = easing;
     this.ruler.style.transitionDuration = `${time}ms`;
+    this.ruler.style.webkitTransitionDuration = `${time}ms`;
     this.translate(x);
   }
   isOutBoundary() {
@@ -160,7 +162,8 @@ class SlideRuler {
     }
   };
   transitionendHandler = () => {
-    this.ruler.transitionDuration = "0ms";
+    this.ruler.style.transitionDuration = "0ms";
+    this.ruler.style.webkitTransitionDuration = "0ms";
     this.isOutBoundary();
   };
 }
