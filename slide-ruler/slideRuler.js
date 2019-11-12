@@ -84,7 +84,6 @@ class SlideRuler {
   isOutBoundary() {
     if (this.translateX > 0 || this.translateX < this.maxTranslate) {
       this.translateX = this.translateX > 0 ? 0 : this.maxTranslate;
-      console.log("isOutBoundary", this.translateX);
       this.scrollTo(this.translateX, 600);
       return true;
     }
@@ -124,7 +123,6 @@ class SlideRuler {
         easing = "cubic-bezier(0.25, 0.46, 0.45, 0.94)";
       }
       destination = this.roundTranslate(destination);
-      console.log("inertiaSliding", destination);
       this.scrollTo(destination, duration, easing);
     }
   }
@@ -155,7 +153,6 @@ class SlideRuler {
       return;
     }
     this.translateX = this.roundTranslate(this.translateX);
-    console.log("endHandler", this.translateX);
     this.scrollTo(this.translateX);
     // 处理惯性滑动
     if (duration < 300) {
