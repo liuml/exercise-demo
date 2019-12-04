@@ -27,7 +27,7 @@ class SlideRuler {
     this.ruler = this.getSliderRuler();
     this.container.appendChild(this.ruler);
     this.container.appendChild(this.getRulerMark());
-    this.scaleWidth = this.ruler.querySelector(".scale-item").clientWidth;
+    this.scaleWidth = this.ruler.querySelector(".scale-item").getBoundingClientRect().width;
     this.maxTranslate = -((this.max - this.min) * this.scaleWidth);
     this.ruler.style.width = `${this.scaleWidth * (this.max - this.min)}px`;
     this.renderInitValue();
@@ -108,12 +108,12 @@ class SlideRuler {
       ((speed * speed) / (2 * this.deceleration)) * (distance < 0 ? -1 : 1);
     let duration = speed / this.deceleration;
     if (destination > 0) {
-      destination = (this.container.clientWidth / 2.5) * (speed / 8);
+      destination = (this.container.getBoundingClientRect().width / 2.5) * (speed / 8);
       distance = Math.abs(this.translateX) + destination;
       duration = distance / speed;
     } else if (destination < this.maxTranslate) {
       destination =
-        this.maxTranslate - (this.container.clientWidth / 2.5) * (speed / 8);
+        this.maxTranslate - (this.container.getBoundingClientRect().width / 2.5) * (speed / 8);
       distance = Math.abs(destination - this.translateX);
       duration = distance / speed;
     }
